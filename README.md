@@ -1,6 +1,6 @@
 # slam
 
-![slam](https://cloud.githubusercontent.com/assets/6108538/23188705/06447c54-f890-11e6-88b7-684680943118.jpg)
+![slam](https://cloud.githubusercontent.com/assets/6108538/23189815/073f58e0-f895-11e6-99f3-0e323f85093c.jpg)
 
 ## What?
 An NBA calendar showing past & upcoming games for your favorite team(s), with
