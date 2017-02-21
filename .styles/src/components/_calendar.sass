@@ -1,0 +1,81 @@
+$_border: 1px solid palette('grey', 'light')
+
+// Assumes iso week format (starting with Monday)
+@mixin _weekends
+  &:nth-child(n+6)
+    color: palette('red')
+
+.calendar
+  width: 100%
+  display: flex
+  flex-direction: column
+
+.calendar__header
+  display: flex
+  justify-content: space-around
+  align-items: center
+  margin-bottom: size(2)
+
+  +above($break-small)
+    margin-bottom: size(3)
+
+.calendar__header__label
+  @extend .h3
+  margin: 0 size(2)
+
+.calendar__header__prev,
+.calendar__header__next
+  @extend .h6
+  cursor: pointer
+  padding: size(1) size(2)
+  border: none
+  background-color: transparent
+
+.calendar__headings
+  display: none
+
+  +above($break-small)
+    display: flex
+    flex-direction: row
+
+.calendar__headings__cell
+  @extend .h6
+  +_weekends
+
+  width: calc(100% / 7)
+  text-align: center
+  margin-bottom: size(1)
+  color: palette('grey')
+
+.calendar__row
+  width: 100%
+  display: flex
+  flex-direction: column
+
+  +above($break-small)
+    flex-direction: row
+    border-top: $_border
+
+    // Expects .calendar__row elements to be wrapped in a parent <div>
+    &:last-of-type
+      border-bottom: $_border
+
+.calendar__row__cell
+  +_weekends
+  width: 100%
+  display: block
+  text-decoration: none
+  color: palette('grey', 'very-dark')
+
+  +above($break-small)
+    width: calc(100% / 7)
+    text-align: center
+    position: relative
+    border-left: $_border
+
+    &:last-of-type
+      border-right: $_border
+
+    &:hover
+      background-color: rgba(0, 0, 0, 0.05)
+      cursor: pointer

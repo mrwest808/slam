@@ -1,0 +1,7 @@
+@mixin above($size)
+  @media (min-width: $size)
+    @content
+      
+@mixin below($size)
+  @media (max-width: $size)
+    @content

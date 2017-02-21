@@ -1,0 +1,22 @@
+@function path($map, $keys...)
+  @each $key in $keys
+    @if not map-has-key($map, $key)
+      @warn "Invalid $key: #{$key}"
+
+    $map: map-get($map, $key)
+
+  @return $map
+
+@function palette($keys...)
+  @if not variable-exists(palette)
+    @error '$palette variable does not exist'
+
+  $color: path($palette, $keys...)
+
+  @if type-of($color) == 'map'
+    @return map-get($color, 'default')
+
+  @return $color
+
+@function size($num: 1)
+  @return map-get($sizes, $num)

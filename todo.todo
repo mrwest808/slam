@@ -1,0 +1,3 @@
+React:
+  ☐ Add local eslint
+  ☐ Create a `fetch` middleware + tests

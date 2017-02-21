@@ -1,0 +1,28 @@
+// .scss file because https://github.com/sass/sass/issues/1088
+
+$sizes: (
+  1: .5rem,
+  2: 1rem,
+  3: 2rem,
+  4: 4rem
+);
+
+$break-tiny: 420px;
+$break-small: 640px;
+$break-medium: 800px;
+
+$sunburst: rgb(234, 83, 49);
+$sunrise: rgb(233, 195, 80);
+$curacao-blue: rgb(34, 199, 218);
+$misty: rgb(240, 239, 238);
+
+$palette: (
+  'red': (
+    'default': $sunburst
+  ),
+  'grey': (
+    'default': #888,
+    'light': $misty,
+    'very-dark': #333
+  )
+);
