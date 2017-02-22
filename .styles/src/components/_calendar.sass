@@ -20,8 +20,11 @@ $_border: 1px solid palette('grey', 'light')
     margin-bottom: size(3)
 
 .calendar__header__label
-  @extend .h3
+  font-size: .75rem
   margin: 0 size(2)
+
+  +above($break-tiny)
+    font-size: 1.25rem
 
 .calendar__header__prev,
 .calendar__header__next
@@ -66,6 +69,13 @@ $_border: 1px solid palette('grey', 'light')
   display: block
   text-decoration: none
   color: palette('grey', 'very-dark')
+
+  +below($break-small)
+    margin-bottom: size(2)
+    border-bottom: $_border
+
+    &:nth-child(even)
+      background-color: transparentize(palette('grey', 'light'), 0.5)
 
   +above($break-small)
     width: calc(100% / 7)

@@ -2,6 +2,11 @@
   display: flex
   position: relative
   height: 80px
+  justify-content: flex-start
+  align-items: center
+
+  +above($break-small)
+    justify-content: center
 
 .game-cell__header
   @extend .h6
@@ -12,3 +17,18 @@
   top: 5px
   left: 5px
   right: 5px
+
+  .game-cell--is-today &
+    color: palette('blue')
+    font-weight: bold
+
+.game-cell__matchup
+  padding-left: size(1)
+
+  +above($break-small)
+    font-size: 0.875rem
+    padding-top: size(1)
+    padding-left: 0
+
+  &--home
+    font-weight: bold
