@@ -1,6 +1,7 @@
 import R from 'ramda';
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import Team from './Team'
 
 const mapValues = R.useWith(R.map, [ R.identity, R.values ]);
 
@@ -20,14 +21,7 @@ class TeamSelector extends Component {
         this.props.onSelect(team);
       }}
     >
-      <img
-        className="team-selector__team__image"
-        src={`logos/${team.abbreviation}.svg`}
-        alt={`${team.fullName} logo`}
-      />
-      <h5 className="team-selector__team__name">
-        {team.fullName}
-      </h5>
+      <Team team={team} />
     </a>
   );
 
