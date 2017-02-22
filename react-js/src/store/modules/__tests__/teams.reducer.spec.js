@@ -1,17 +1,20 @@
-import R from 'ramda';
 import teamsReducer, {
   FETCH_TEAMS_REQUEST,
   FETCH_TEAMS_SUCCESS,
   FETCH_TEAMS_FAILURE,
+  SELECT_TEAM,
+  RESET_TEAM,
 } from '../teams';
 
 const initialState = teamsReducer(undefined, { type: 'INIT' });
 
 it('returns expected initial state', () => {
-  const { allTeams } = initialState;
+  const { allTeams, selectedTeam } = initialState;
 
   expect(allTeams).toBeValidTeamList();
   expect(allTeams.teams).toBeEmpty();
+
+  expect(selectedTeam).toBe(null);
 });
 
 it('handles FETCH_TEAMS_REQUEST action', () => {
@@ -49,4 +52,23 @@ it('handles FETCH_TEAMS_FAILURE action', () => {
   expect(allTeams).toBeValidTeamList();
   expect(allTeams.error).toBe(action.payload.error);
   expect(allTeams.teams).toBeEmpty();
+});
+
+it('handles SELECT_TEAM action', () => {
+  const action = { type: SELECT_TEAM, payload: 'cavs' };
+  const state = teamsReducer(initialState, action);
+  const { selectedTeam } = state;
+
+  expect(selectedTeam).toBe(action.payload);
+});
+
+it('handles RESET_TEAM action', () => {
+  const selectAction = { type: SELECT_TEAM, payload: 'cavs' };
+  const resetAction = { type: RESET_TEAM };
+
+  const stateOne = teamsReducer(initialState, selectAction);
+  const stateTwo = teamsReducer(stateOne, resetAction);
+
+  expect(stateOne.selectedTeam).toBe(selectAction.payload);
+  expect(stateTwo.selectedTeam).toBeNull();
 });

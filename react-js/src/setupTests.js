@@ -1,20 +1,9 @@
 import R from 'ramda';
+import { createSelector } from 'reselect';
 
-const gameListKeys = [
-  'isFetching',
-  'hasFetched',
-  'error',
-  'gameIds',
-  'timestamp',
-];
+const gameListKeys = [ 'isFetching', 'hasFetched', 'error', 'gameIds' ];
 
-const teamListKeys = [
-  'isFetching',
-  'hasFetched',
-  'error',
-  'teams',
-  'timestamp',
-];
+const teamListKeys = [ 'isFetching', 'hasFetched', 'error', 'teams' ];
 
 expect.extend({
   toBeValidGameList(received) {
@@ -59,5 +48,29 @@ expect.extend({
     }
 
     return { pass: false, message: () => `expected ${input} to be empty` };
+  },
+  toBeMemoized(receivedSelector, state, props) {
+    let i = 0;
+    const select = createSelector(receivedSelector, value => {
+      i++;
+      return value;
+    });
+
+    select(state, props);
+    select(state, props);
+
+    if (i === 1) {
+      return {
+        pass: true,
+        message: () =>
+          'expected selector to not return memoized result when called with same arguments',
+      };
+    }
+
+    return {
+      pass: false,
+      message: () =>
+        'expected selector to return memoized result when called with same arguments',
+    };
   },
 });

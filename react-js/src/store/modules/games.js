@@ -2,7 +2,7 @@ import R from 'ramda';
 import { combineReducers } from 'redux';
 import { createSelector } from 'reselect';
 import { handleActions } from 'redux-actions';
-import { camelizeKeys } from 'humps'
+import { camelizeKeys } from 'humps';
 import { createFetchAction, fromProps } from '../utils';
 
 /* ---------------------------------- *\
@@ -15,24 +15,20 @@ export const FETCH_GAMES_FOR_TEAM_FAILURE = 'games/FETCH_FOR_TEAM_FAILURE';
 /* ---------------------------------- *\
   * Action creators
 \* ---------------------------------- */
-const indexAndCamelCase = R.compose(
-  R.indexBy(R.prop('eventId')),
-  camelizeKeys,
-)
-export const fetchGamesForTeam = teamId =>
-  createFetchAction({
-    endpoint: `/teams/${teamId}/games`,
-    normalize: payload => ({
-      games: indexAndCamelCase(payload.games),
-      // games: R.indexBy(R.prop('event_id'), payload.games),
-    }),
-    payload: { teamId },
-    types: [
-      FETCH_GAMES_FOR_TEAM_REQUEST,
-      FETCH_GAMES_FOR_TEAM_SUCCESS,
-      FETCH_GAMES_FOR_TEAM_FAILURE,
-    ],
-  });
+const indexAndCamelCase = R.compose(R.indexBy(R.prop('eventId')), camelizeKeys);
+
+export const fetchGamesForTeam = teamId => createFetchAction({
+  endpoint: `/teams/${teamId}/games`,
+  normalize: payload => ({
+    games: indexAndCamelCase(payload.games),
+  }),
+  payload: { teamId },
+  types: [
+    FETCH_GAMES_FOR_TEAM_REQUEST,
+    FETCH_GAMES_FOR_TEAM_SUCCESS,
+    FETCH_GAMES_FOR_TEAM_FAILURE,
+  ],
+});
 
 /* ---------------------------------- *\
   * Selectors
@@ -42,14 +38,13 @@ export const selectAllGames = R.path([ 'games', 'allGames' ]);
 
 // :: State -> TeamID -> Maybe GameList
 export const selectGameListForTeam = createSelector(
-  [ fromProps('teamId'), selectGamesByTeam ],
-  R.prop,
-);
+  [ fromProps('teamId'), selectGamesByTeam, selectAllGames ],
+  (teamId, gamesByTeam, allGames) => {
+    const gameList = gamesByTeam[teamId];
 
-// :: State -> TeamID -> Games
-export const selectGamesForTeam = createSelector(
-  [ selectGameListForTeam, selectAllGames ],
-  (gameList, allGames) => gameList && R.pick(gameList.gameIds, allGames),
+    return gameList &&
+      R.assoc('games', R.pick(gameList.gameIds, allGames), gameList);
+  },
 );
 
 /* ---------------------------------- *\
@@ -63,7 +58,6 @@ const gameList = handleActions(
       isFetching: false,
       hasFetched: true,
       gameIds: R.keys(action.payload.games),
-      timestamp: Date.now(),
     }),
     [FETCH_GAMES_FOR_TEAM_FAILURE]: (state, action) => ({
       ...state,
@@ -76,7 +70,6 @@ const gameList = handleActions(
     hasFetched: false,
     error: null,
     gameIds: [],
-    timestamp: null,
   },
 );
 
