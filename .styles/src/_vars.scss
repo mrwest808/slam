@@ -15,6 +15,7 @@ $sunburst: rgb(234, 83, 49);
 $sunrise: rgb(233, 195, 80);
 $curacao-blue: rgb(34, 199, 218);
 $misty: rgb(240, 239, 238);
+$spruce: rgb(109, 176, 86);
 
 $palette: (
   'red': (
@@ -27,5 +28,8 @@ $palette: (
   ),
   'blue': (
     'default': $curacao-blue
+  ),
+  'green': (
+    'default': $spruce
   )
 );

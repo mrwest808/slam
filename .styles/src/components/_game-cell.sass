@@ -24,6 +24,7 @@
 
 .game-cell__matchup
   padding-left: size(1)
+  color: palette('grey', 'very-dark')
 
   +above($break-small)
     font-size: 0.875rem
@@ -32,3 +33,9 @@
 
   &--home
     font-weight: bold
+
+  .game-cell--show-scores.game-cell--is-win &
+    color: palette('green')
+
+  .game-cell--show-scores.game-cell--is-loss &
+    color: palette('red')
