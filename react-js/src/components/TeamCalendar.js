@@ -1,6 +1,7 @@
 import R from 'ramda';
 import React, { Component, PropTypes } from 'react';
 import moment from 'moment';
+import Button from './Button';
 import CalendarMonth from './CalendarMonth';
 import GameCell from './GameCell';
 import Team from './Team';
@@ -36,13 +37,21 @@ export default class TeamCalendar extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { gamesByDate: gamesByDate(props.games) };
+    this.state = {
+      gamesByDate: gamesByDate(props.games),
+      showScores: false,
+    };
   }
+
+  toggleScores = () => this.setState({ showScores: !this.state.showScores });
 
   renderDay = (day, month) => {
     const isoDate = toISODateString(day);
     const game = this.state.gamesByDate[isoDate];
-    const time = game && moment(game.eventStartDateTime).format('LT')
+    const time = game && moment(game.eventStartDateTime).format('LT');
+    const outcome = game && game.teamEventResult;
+    const score = game &&
+      `${game.teamPointsScored} - ${game.opponentPointsScored}`;
 
     return (
       <GameCell
@@ -51,6 +60,9 @@ export default class TeamCalendar extends Component {
         isGameNight={!!game}
         isHomeGame={game && game.teamEventLocationType === 'h'}
         opponent={game && game.opponent.abbreviation}
+        outcome={outcome}
+        score={score}
+        showScores={this.state.showScores}
         time={time}
       />
     );
@@ -58,20 +70,17 @@ export default class TeamCalendar extends Component {
 
   render() {
     const { className, onReset, team } = this.props;
+    const { showScores } = this.state;
 
     return (
       <div className={className}>
         <Team hideName team={team} />
-        <a
-          className="block mb3 py1 text-center link"
-          href="#"
-          onClick={event => {
-            event.preventDefault();
-            onReset();
-          }}
-        >
+        <Button className="block mx-auto mb2" onClick={onReset}>
           Reset team
-        </a>
+        </Button>
+        <Button className="block mx-auto mb3" onClick={this.toggleScores}>
+          {showScores ? 'Hide' : 'Show'} scores
+        </Button>
         <CalendarMonth onDaySelect={noop} renderDay={this.renderDay} />
       </div>
     );

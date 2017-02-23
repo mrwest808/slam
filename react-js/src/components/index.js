@@ -1,3 +1,4 @@
+export { default as Button } from './Button'
 export { default as CalendarWeek } from './CalendarWeek'
 export { default as CalendarMonth } from './CalendarMonth'
 export { default as Container } from './Container'
