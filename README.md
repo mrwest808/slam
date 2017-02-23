@@ -1,6 +1,8 @@
 # slam
 
-![slam](https://cloud.githubusercontent.com/assets/6108538/23189815/073f58e0-f895-11e6-99f3-0e323f85093c.jpg)
+<div align="center">
+  <img alt="screen" src="https://cloud.githubusercontent.com/assets/6108538/23261205/8bca1f1e-f9d5-11e6-9be7-76a3d0d1f5e5.jpg" width="66%">
+</div>
 
 ## What?
 An NBA calendar showing past & upcoming games for your favorite team(s), with
