@@ -1,0 +1,46 @@
+$_width: 280px
+
+.sidebar
+  width: $_width
+  background-color: palette('grey', 'very-light')
+  border-right: 1px solid palette('grey', 'light')
+  padding: size(2)
+  font-size: .875rem
+  overflow-y: auto
+  position: fixed
+  top: 0
+  left: -$_width
+  bottom: 0
+  z-index: 1
+  transition: left 300ms ease-out
+
+  &--visible
+    left: 0
+
+  +above($break-medium)
+    position: static
+
+.sidebar__team
+  display: flex
+  align-items: center
+  margin-bottom: size(2)
+  white-space: nowrap
+  text-decoration: none
+  color: palette('grey', 'very-dark')
+  opacity: 0.6
+
+  &--is-selected,
+  &:hover
+    opacity: 1
+
+  &--is-selected
+    color: palette('blue')
+
+  img
+    width: 20px
+    height: 20px
+    margin-right: 5px
+
+  span
+    overflow: hidden
+    text-overflow: ellipsis

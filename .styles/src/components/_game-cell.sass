@@ -1,41 +1,35 @@
 .game-cell
-  display: flex
+  padding: size(1)
   position: relative
-  height: 80px
-  justify-content: flex-start
-  align-items: center
-
-  +above($break-small)
-    justify-content: center
-
-.game-cell__header
-  @extend .h6
-
-  position: absolute
   display: flex
-  justify-content: space-between
-  top: 5px
-  left: 5px
-  right: 5px
+  height: 100%
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  font-size: .875rem
+  text-align: center
 
-  .game-cell--is-today &
-    color: palette('blue')
-    font-weight: bold
+  p
+    margin: 0
 
-.game-cell__matchup
-  padding-left: size(1)
-  color: palette('grey', 'very-dark')
+.game-cell--show-scores.game-cell--is-win p
+  color: palette('green')
 
-  +above($break-small)
-    font-size: 0.875rem
-    padding-top: size(1)
-    padding-left: 0
+.game-cell--show-scores.game-cell--is-loss p
+  color: palette('red')
 
-  &--home
-    font-weight: bold
+.game-cell__date
+  position: absolute
+  top: 3px
+  right: 3px
+  font-size: 90%
+  padding: 4px
+  border-radius: 50%
 
-  .game-cell--show-scores.game-cell--is-win &
-    color: palette('green')
+  .day-cell--is-today &
+    background-color: palette('red')
+    color: palette('white')
 
-  .game-cell--show-scores.game-cell--is-loss &
+  .day-cell--is-today.day-cell--is-first-day-of-month &
+    background-color: transparent
     color: palette('red')

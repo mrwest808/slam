@@ -4,6 +4,7 @@ import { createSelector } from 'reselect';
 import { handleActions } from 'redux-actions';
 import { camelizeKeys } from 'humps';
 import { createFetchAction, fromProps } from '../utils';
+import { gamesByDate } from '../../utils';
 
 /* ---------------------------------- *\
   * Constants
@@ -17,18 +18,17 @@ export const FETCH_GAMES_FOR_TEAM_FAILURE = 'games/FETCH_FOR_TEAM_FAILURE';
 \* ---------------------------------- */
 const indexAndCamelCase = R.compose(R.indexBy(R.prop('eventId')), camelizeKeys);
 
-export const fetchGamesForTeam = teamId => createFetchAction({
-  endpoint: `/teams/${teamId}/games`,
-  normalize: payload => ({
-    games: indexAndCamelCase(payload.games),
-  }),
-  payload: { teamId },
-  types: [
-    FETCH_GAMES_FOR_TEAM_REQUEST,
-    FETCH_GAMES_FOR_TEAM_SUCCESS,
-    FETCH_GAMES_FOR_TEAM_FAILURE,
-  ],
-});
+export const fetchGamesForTeam = teamId =>
+  createFetchAction({
+    endpoint: `/teams/${teamId}/games`,
+    normalize: payload => ({ games: indexAndCamelCase(payload.games) }),
+    payload: { teamId },
+    types: [
+      FETCH_GAMES_FOR_TEAM_REQUEST,
+      FETCH_GAMES_FOR_TEAM_SUCCESS,
+      FETCH_GAMES_FOR_TEAM_FAILURE,
+    ],
+  });
 
 /* ---------------------------------- *\
   * Selectors
@@ -42,8 +42,12 @@ export const selectGameListForTeam = createSelector(
   (teamId, gamesByTeam, allGames) => {
     const gameList = gamesByTeam[teamId];
 
-    return gameList &&
-      R.assoc('games', R.pick(gameList.gameIds, allGames), gameList);
+    if (!gameList) {
+      return undefined;
+    }
+
+    const games = R.pick(gameList.gameIds, allGames);
+    return R.merge(gameList, { games, gamesByDate: gamesByDate(games) });
   },
 );
 
@@ -65,12 +69,7 @@ const gameList = handleActions(
       error: action.payload.error,
     }),
   },
-  {
-    isFetching: false,
-    hasFetched: false,
-    error: null,
-    gameIds: [],
-  },
+  { isFetching: false, hasFetched: false, error: null, gameIds: [] },
 );
 
 const gamesByTeam = (state = {}, action) => {

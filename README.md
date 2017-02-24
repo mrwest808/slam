@@ -1,7 +1,7 @@
 # slam
 
 <div align="center">
-  <img alt="screen" src="https://cloud.githubusercontent.com/assets/6108538/23261205/8bca1f1e-f9d5-11e6-9be7-76a3d0d1f5e5.jpg" width="66%">
+  <img alt="screen" src="https://cloud.githubusercontent.com/assets/6108538/23324606/01ca36da-faef-11e6-8397-c8406b69b98c.png" width="100%">
 </div>
 
 ## What?
