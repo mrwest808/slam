@@ -66,60 +66,6 @@ class GameCell extends Component {
         {isGameNight && this.renderGame()}
       </div>
     );
-    // return (
-    //   <div
-    //     className={
-    //       classnames([
-    //         'game-cell',
-    //         isGameNight && 'game-cell--game-night',
-    //         showScores && 'game-cell--show-scores',
-    //         outcome === 'win' && 'game-cell--is-win',
-    //         outcome === 'loss' && 'game-cell--is-loss',
-    //       ])
-    //     }
-    //   >
-    //     <span className="game-cell__date">{dayLabel}</span>
-    //
-    //     {/* <div className="default-day-cell">
-    //       <span className="default-day-cell__date">{dayLabel}</span>
-    //       </div>
-    //     */}
-    //     <div className="game-cell__header">
-    //       <span className="game-cell__header__date xs-hide">
-    //         {dayLabel}
-    //       </span>
-    //       <span className="game-cell__header__date sm-hide md-hide lg-hide">
-    //         {day.format('dddd')}, {day.format('MMM')} {day.format('D')} {time ? `at ${time}` : ''}
-    //       </span>
-    //       <span>
-    //         {isGameNight ? '\uD83C\uDFC0' : ''}
-    //       </span>
-    //     </div>
-    //     {opponent && (
-    //       <div
-    //         className={
-    //           classnames([
-    //             'game-cell__matchup',
-    //             isHomeGame && 'game-cell__matchup--home',
-    //           ])
-    //         }
-    //       >
-    //         <span>
-    //           {isHomeGame ? 'vs.' : '@'} {opponent}
-    //         </span>
-    //         {!isUpcoming && showScores &&
-    //           <span className="sm-hide md-hide lg-hide">
-    //             {' '}({score})
-    //           </span>
-    //         }
-    //         <span className="block xs-hide h6 regular">
-    //           {isUpcoming && time}
-    //           {!isUpcoming && showScores && `(${score})`}
-    //         </span>
-    //       </div>
-    //     )}
-    //   </div>
-    // );
   }
 }
 
