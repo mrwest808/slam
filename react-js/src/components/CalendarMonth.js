@@ -1,39 +1,28 @@
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
 import MomentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import chunk from 'lodash.chunk';
-import CalendarHeader from './calendar/CalendarHeader';
-import DayHeadings from './calendar/DayHeadings';
 import WeekRow from './calendar/WeekRow';
 
 export default class CalendarMonth extends Component {
   static propTypes = {
-    onDaySelect: PropTypes.func.isRequired,
-    renderDay: PropTypes.func.isRequired,
-    selectedDate: MomentPropTypes.momentObj,
+    month: MomentPropTypes.momentObj.isRequired,
+    renderDay: PropTypes.func,
   };
 
-  static defaultProps = {
-    renderDay(day, month) {
-      return (
-        <div className={classnames([ !day.isSame(month, 'month') && 'muted' ])}>
-          {day.format('D')}
-        </div>
-      );
-    },
-  };
+  state = this.createState();
 
-  constructor(props) {
-    super(props);
-
-    this.state = this.createState(props.selectedDate || moment());
+  componentDidUpdate(prevProps) {
+    if (!prevProps.month.isSame(this.props.month, 'month')) {
+      this.setState(this.createState());
+    }
   }
 
-  createState(date) {
-    const month = date.clone().startOf('month');
+  createState() {
+    const { month } = this.props;
+
     const firstMonday = month.clone().startOf('isoWeek');
-    const lastSunday = month.clone().endOf('month').endOf('isoWeek');
+    const lastSunday = month.clone().add(5, 'weeks').endOf('isoWeek');
     const days = [];
 
     let day = moment(firstMonday);
@@ -46,52 +35,26 @@ export default class CalendarMonth extends Component {
       currentMonth: month.format('MMMM'),
       currentYear: month.format('YYYY'),
       weeks: chunk(days, 7),
-      month,
     };
   }
-
-  handlePrevClick = () => {
-    const prevMonth = this.state.month.clone().subtract(1, 'month');
-
-    this.setState(this.createState(prevMonth));
-  };
-
-  handleNextClick = () => {
-    const nextMonth = this.state.month.clone().add(1, 'month');
-
-    this.setState(this.createState(nextMonth));
-  };
-
-  renderDay = day => {
-    return this.props.renderDay(day, this.state.month);
-  };
 
   renderWeek = (days, index) => {
     return (
       <WeekRow
         key={index}
         days={days}
-        onDaySelect={this.props.onDaySelect}
-        renderDay={this.renderDay}
+        month={this.props.month}
+        renderDay={this.props.renderDay}
       />
     );
   };
 
   render() {
-    const { currentMonth, currentYear, weeks } = this.state;
+    const { weeks } = this.state;
 
     return (
-      <div className="calendar">
-        <CalendarHeader
-          onPrevClick={this.handlePrevClick}
-          onNextClick={this.handleNextClick}
-        >
-          {currentMonth} {currentYear}
-        </CalendarHeader>
-        <DayHeadings shortNames />
-        <div>
-          {weeks.map(this.renderWeek)}
-        </div>
+      <div className="month">
+        {weeks.map(this.renderWeek)}
       </div>
     );
   }

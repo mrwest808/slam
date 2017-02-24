@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import Loader from 'react-loader';
-import { Container, Heading, TeamCalendar, TeamSelector } from './components';
+import { Calendar, Sidebar } from './components';
 import {
   fetchGamesForTeam,
   selectGameListForTeam,
@@ -15,62 +14,50 @@ import {
 } from './store/modules/teams';
 
 class App extends Component {
+  state = { showMobileSidebar: false };
+
   componentWillMount() {
     this.props.fetchTeams();
   }
 
   componentDidUpdate(prevProps) {
     if (
-      !prevProps.selectedTeam
-      && this.props.selectedTeam
-      && !this.props.gameList
+      prevProps.selectedTeam !== this.props.selectedTeam && !this.props.gameList
     ) {
       this.props.fetchGamesForTeam(this.props.selectedTeam);
     }
   }
 
-  onSelectTeam = team => {
-    this.props.selectTeam(team.teamId);
+  toggleShowMobileSidebar = () => {
+    this.setState({ showMobileSidebar: !this.state.showMobileSidebar });
   };
 
-  renderTeamSelect() {
-    const { teamList } = this.props;
+  onSelectTeam = team => {
+    this.props.selectTeam(team.teamId);
 
-    return (
-      <div>
-        <Heading align="center" className="mb3" uppercase>
-          Select your team
-        </Heading>
-        <TeamSelector onSelect={this.onSelectTeam} teams={teamList.teams} />
-      </div>
-    );
-  }
-
-  renderTeamCalendar() {
-    const { gameList, selectedTeam, teamList } = this.props;
-    const team = teamList.teams[selectedTeam];
-    const games = gameList && gameList.games;
-
-    return (
-      <Loader loaded={gameList && gameList.hasFetched}>
-        <TeamCalendar
-          games={games}
-          onReset={this.props.resetTeam}
-          team={team}
-        />
-      </Loader>
-    );
-  }
+    if (this.state.showMobileSidebar) {
+      this.toggleShowMobileSidebar();
+    }
+  };
 
   render() {
-    const { selectedTeam, teamList } = this.props;
+    const { gameList, selectedTeam, teamList } = this.props;
+    const { showMobileSidebar } = this.state;
 
     return (
-      <Container>
-        <Loader loaded={teamList.hasFetched}>
-          {selectedTeam ? this.renderTeamCalendar() : this.renderTeamSelect()}
-        </Loader>
-      </Container>
+      <div className="app-container">
+        <Sidebar
+          onSelectTeam={this.onSelectTeam}
+          selectedTeam={selectedTeam}
+          showMobileSidebar={showMobileSidebar}
+          teamList={teamList}
+        />
+        <Calendar
+          gameList={gameList}
+          team={selectedTeam && teamList.teams[selectedTeam]}
+          toggleSidebar={this.toggleShowMobileSidebar}
+        />
+      </div>
     );
   }
 }
