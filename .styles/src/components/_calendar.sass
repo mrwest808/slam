@@ -1,91 +1,125 @@
-$_border: 1px solid palette('grey', 'light')
-
-// Assumes iso week format (starting with Monday)
-@mixin _weekends
-  &:nth-child(n+6)
-    color: palette('red')
-
 .calendar
-  width: 100%
   display: flex
   flex-direction: column
+  width: 100%
+  height: 100%
+
+// Header
 
 .calendar__header
-  display: flex
-  justify-content: space-around
-  align-items: center
-  margin-bottom: size(2)
-
-  +above($break-small)
-    margin-bottom: size(3)
-
-.calendar__header__label
-  font-size: .75rem
-  margin: 0 size(2)
-
-  +above($break-tiny)
-    font-size: 1.25rem
-
-.calendar__header__prev,
-.calendar__header__next
-  @extend .h6
-  cursor: pointer
-  padding: size(1) size(2)
-  border: none
-  background-color: transparent
-
-.calendar__headings
-  display: none
-
-  +above($break-small)
-    display: flex
-    flex-direction: row
-
-.calendar__headings__cell
-  @extend .h6
-  +_weekends
-
-  width: calc(100% / 7)
-  text-align: center
-  margin-bottom: size(1)
-  color: palette('grey')
-
-.calendar__row
   width: 100%
+  border-bottom: 1px solid palette('grey')
+  position: relative
+
+.calendar__header-inner
   display: flex
   flex-direction: column
+  align-items: center
+  margin-bottom: size(2)
+  padding: size(2)
+  padding-bottom: 0
 
-  +above($break-small)
+  +above($break-medium)
     flex-direction: row
-    border-top: $_border
+    justify-content: space-between
+    align-items: center
 
-    // Expects .calendar__row elements to be wrapped in a parent <div>
-    &:last-of-type
-      border-bottom: $_border
+.calendar__header__title
+  margin: 0
+  margin-bottom: size(1)
 
-.calendar__row__cell
-  +_weekends
+  +above($break-medium)
+    margin-bottom: 0
+
+  &--is-loading
+    opacity: 0.6
+    font-style: italic
+
+.calendar__header__actions
+  display: flex
+  flex-direction: row
+
+  button
+    margin: 0 1px
+
+.menu-button
+  position: absolute
+  top: size(2)
+  right: size(2)
+
+  +above($break-medium)
+    position: static
+
+.calendar__header__weekdays
+  @extend .light
+  padding-bottom: size(1)
+
+.weekdays
+  display: flex
+  flex-direction: row
+
+.weekdays__cell
+  padding: 0 size(1)
+  text-align: right
+  width: calc(100% / 7)
+
+  &--is-weekend
+    color: palette('grey')
+
+// Body
+
+.calendar__body
+  flex: 1
   width: 100%
-  display: block
-  text-decoration: none
-  color: palette('grey', 'very-dark')
 
-  +below($break-small)
-    margin-bottom: size(2)
-    border-bottom: $_border
+.month
+  height: 100%
 
-    &:nth-child(even)
-      background-color: transparentize(palette('grey', 'light'), 0.5)
+.week-row
+  display: flex
+  flex-direction: row
+  height: calc(100% / 6)
+  border-bottom: 1px solid palette('white', 'dark')
 
-  +above($break-small)
-    width: calc(100% / 7)
-    text-align: center
-    position: relative
-    border-left: $_border
+  &:last-of-type
+    border-bottom: none
 
-    &:last-of-type
-      border-right: $_border
+.day-cell
+  width: calc(100% / 7)
+  border-right: 1px solid palette('white', 'dark')
+  color: palette('grey')
+  // padding: size(1)
+  cursor: default
+  user-select: none
 
-    &:hover
-      background-color: rgba(0, 0, 0, 0.05)
-      cursor: pointer
+  &:last-of-type
+    border-right: none
+
+  &--is-current-month
+    color: palette('grey', 'very-dark')
+
+  &--is-weekend
+    background-color: palette('grey', 'very-light')
+
+.day-cell--is-weekend.day-cell--is-current-month
+  color: palette('grey', 'dark')
+
+.default-day-cell
+  padding: size(1)
+  position: relative
+
+.default-day-cell__date
+  position: absolute
+  top: 3px
+  right: 3px
+  font-size: 90%
+  padding: 4px
+  border-radius: 50%
+
+  .day-cell--is-today &
+    background-color: palette('red')
+    color: palette('white')
+
+  .day-cell--is-today.day-cell--is-first-day-of-month &
+    background-color: transparent
+    color: palette('red')
