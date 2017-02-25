@@ -31,7 +31,7 @@ export default class Calendar extends Component {
   };
 
   handleTodayClick = () => {
-    const today = moment();
+    const today = moment().utc();
 
     if (!today.isSame(this.state.month, 'month')) {
       this.setState({ month: today.startOf('month') });
