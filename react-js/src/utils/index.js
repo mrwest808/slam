@@ -6,11 +6,11 @@ export const trimISOString = R.compose(R.head, R.split('T'));
 
 // Get date part of ISO string from date object
 export const toISODateString = date => {
-  if (!moment.isMoment(date) && !moment.isDate(date)) {
-    date = new Date(date);
+  if (!moment.isMoment(date)) {
+    date = moment(date);
   }
 
-  return trimISOString(date.toISOString());
+  return trimISOString(date.utc().toISOString());
 };
 
 // Index games by event date

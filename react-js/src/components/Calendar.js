@@ -18,7 +18,7 @@ export default class Calendar extends Component {
     toggleSidebar: PropTypes.func.isRequired,
   };
 
-  state = { month: moment().startOf('month'), showScores: false };
+  state = { month: moment().utc().startOf('month'), showScores: false };
 
   handlePrevClick = () => {
     const prevMonth = this.state.month.clone().subtract(1, 'month');
