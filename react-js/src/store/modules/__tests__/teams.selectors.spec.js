@@ -25,7 +25,7 @@ describe('selectTeamById', () => {
 
   it('is memoized', () => {
     const props = { teamId: 'knicks' };
-    expect(selectTeamById, state, props);
+    expect(selectTeamById).toBeMemoized(state, props);
   });
 });
 
