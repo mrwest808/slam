@@ -4,15 +4,14 @@ import 'isomorphic-fetch';
 import R from 'ramda';
 import { createAction } from 'redux-actions';
 
-export const baseUrl = 'http://localhost:9999';
+export const baseUrl = process.env.NODE_ENV === 'production'
+  ? ''
+  : 'http://localhost:8080';
+
 const actionWith = (actionType, payload) => createAction(actionType)(payload);
 
 export default fetchOptions => dispatch => {
-  const {
-    endpoint,
-    normalize = R.identity,
-    payload = {},
-  } = fetchOptions;
+  const { endpoint, normalize = R.identity, payload = {} } = fetchOptions;
   const [ REQUEST, SUCCESS, FAILURE ] = fetchOptions.types;
   const url = R.concat(baseUrl, endpoint);
 
