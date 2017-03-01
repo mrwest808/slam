@@ -20,6 +20,8 @@ languages and frameworks.
 ## Installation
 Coming soon...
 
+Used together with [this server](https://github.com/mrwest808/slam-server).
+
 ## Implementations
 - [React.js](react-js/)
 
