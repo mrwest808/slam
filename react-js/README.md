@@ -20,4 +20,4 @@ yarn run test
 yarn start
 ```
 
-`../.server` also needs to be running.
+[slam-server](https://github.com/mrwest808/slam-server) also needs to be running.
