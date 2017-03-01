@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import MomentPropTypes from 'react-moment-proptypes';
 import classnames from 'classnames';
 
-// TODO Move prop types into class
 class GameCell extends Component {
   static propTypes = {
     day: MomentPropTypes.momentObj.isRequired,
