@@ -9,7 +9,11 @@
 .calendar__header
   width: 100%
   border-bottom: 1px solid palette('grey')
-  position: relative
+  position: fixed
+  background-color: palette('white')
+
+  +above($break-small)
+    position: relative
 
 .calendar__header-inner
   display: flex
@@ -38,6 +42,7 @@
 .calendar__header__actions
   display: flex
   flex-direction: row
+  flex-wrap: wrap
 
   button
     margin: 0 1px
@@ -55,8 +60,11 @@
   padding-bottom: size(1)
 
 .weekdays
-  display: flex
-  flex-direction: row
+  display: none
+
+  +above($break-small)
+    display: flex
+    flex-direction: row
 
 .weekdays__cell
   padding: 0 size(1)
@@ -69,28 +77,51 @@
 // Body
 
 .calendar__body
-  flex: 1
-  width: 100%
+  margin-top: 100px
+
+  +above($break-small)
+    flex: 1
+    width: 100%
+    margin-top: 0
+
+    // Safari fix..
+    position: relative
 
 .month
   height: 100%
 
+  // Safari fix..
+  +above($break-small)
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+
 .week-row
   display: flex
-  flex-direction: row
-  height: calc(100% / 6)
-  border-bottom: 1px solid palette('white', 'dark')
+  flex-direction: column
 
-  &:last-of-type
-    border-bottom: none
+  +above($break-small)
+    flex-direction: row
+    height: calc(100% / 6)
+    border-bottom: 1px solid palette('white', 'dark')
+
+    &:last-of-type
+      border-bottom: none
 
 .day-cell
-  width: calc(100% / 7)
-  border-right: 1px solid palette('white', 'dark')
+  width: 100%
+  padding: size(3) size(1)
   color: palette('grey')
-  // padding: size(1)
-  cursor: default
   user-select: none
+
+  +above($break-small)
+    width: calc(100% / 7)
+    border-right: 1px solid palette('white', 'dark')
+    cursor: default
+    margin: 0
+    padding: 0
 
   &:last-of-type
     border-right: none

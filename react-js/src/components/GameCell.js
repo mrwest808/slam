@@ -33,22 +33,33 @@ class GameCell extends Component {
     const isUpcoming = !outcome;
 
     return (
-      <div>
+      <div className="game-cell__matchup">
         <p className={isHomeGame && 'bold'}>
           {isHomeGame ? 'vs' : '@'} {opponent}
+          {
+            !isUpcoming &&
+            showScores &&
+              <span className="sm-hide md-hide lg-hide"> ({score})</span>
+          }
         </p>
-        {isUpcoming && <p className="h6">{time}</p>}
-        {!isUpcoming && showScores && <p className="h6">{score}</p>}
+        {isUpcoming && <p className="h6 xs-hide">{time}</p>}
+        {!isUpcoming && showScores && <p className="h6 xs-hide">{score}</p>}
       </div>
     );
   }
 
   render() {
-    const { day, isGameNight, outcome, showScores } = this.props;
+    const { day, isGameNight, outcome, showScores, time } = this.props;
     const dayInMonth = day.format('D');
     const dayLabel = Number(dayInMonth) === 1
-      ? `${day.format('MMM')} ${dayInMonth}`
-      : dayInMonth;
+      ? {
+        long: `${day.format('ddd')}, ${day.format('MMM')} ${dayInMonth}`,
+        short: `${day.format('MMM')} ${dayInMonth}`,
+      }
+      : {
+        long: `${day.format('ddd')}, ${day.format('MMM')} ${dayInMonth}`,
+        short: dayInMonth,
+      };
 
     return (
       <div
@@ -62,7 +73,13 @@ class GameCell extends Component {
           ])
         }
       >
-        <span className="game-cell__date">{dayLabel}</span>
+        <span className="game-cell__date">
+          <span className="sm-hide md-hide lg-hide">
+            {dayLabel.long}
+            {isGameNight && ` at ${time}`}
+          </span>
+          <span className="xs-hide">{dayLabel.short}</span>
+        </span>
         {isGameNight && this.renderGame()}
       </div>
     );
