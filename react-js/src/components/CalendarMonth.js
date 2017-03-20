@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import MomentPropTypes from 'react-moment-proptypes';
 import moment from 'moment';
 import chunk from 'lodash.chunk';
-import WeekRow from './calendar/WeekRow';
+import WeekRow from './CalendarWeekRow';
 
 export default class CalendarMonth extends Component {
   static propTypes = {

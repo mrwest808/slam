@@ -14,7 +14,7 @@ const isoDayNames = daysInWeek.map(num => {
   };
 });
 
-const DayHeadings = ({ shortNames }) => (
+const CalendarDayHeadings = ({ shortNames }) => (
   <div className="weekdays">
     {isoDayNames.map((day, index) => (
       <div
@@ -32,7 +32,7 @@ const DayHeadings = ({ shortNames }) => (
   </div>
 );
 
-DayHeadings.propTypes = { shortNames: PropTypes.bool.isRequired };
-DayHeadings.defaultProps = { shortNames: false };
+CalendarDayHeadings.propTypes = { shortNames: PropTypes.bool.isRequired };
+CalendarDayHeadings.defaultProps = { shortNames: false };
 
-export default DayHeadings;
+export default CalendarDayHeadings;

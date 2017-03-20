@@ -5,7 +5,7 @@ import MomentPropTypes from 'react-moment-proptypes';
 
 const today = moment();
 
-export default class DayCell extends Component {
+export default class CalendarDayCell extends Component {
   static propTypes = {
     day: MomentPropTypes.momentObj.isRequired,
     isCurrentMonth: PropTypes.bool.isRequired,

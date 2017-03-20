@@ -21,18 +21,15 @@ export default class Sidebar extends Component {
     return (
       <a
         key={team.teamId}
-        className={
-          classnames([
-            'sidebar__team',
-            this.props.selectedTeam === team.teamId &&
-              'sidebar__team--is-selected',
-          ])
-        }
+        className={classnames([
+          'sidebar__team',
+          this.props.selectedTeam === team.teamId && 'sidebar__team--is-selected',
+        ])}
         href="#"
         onClick={event => {
-            event.preventDefault();
-            this.props.onSelectTeam(team);
-          }}
+          event.preventDefault();
+          this.props.onSelectTeam(team);
+        }}
       >
         <TeamLogo team={team} />
         <span>{team.fullName}</span>
@@ -45,9 +42,10 @@ export default class Sidebar extends Component {
 
     return (
       <div
-        className={
-          classnames([ 'sidebar', showMobileSidebar && 'sidebar--visible' ])
-        }
+        className={classnames([
+          'sidebar',
+          showMobileSidebar && 'sidebar--visible',
+        ])}
       >
         {!teamList.hasFetched && <Loader />}
         {teamList.hasFetched && mapValues(this.renderTeam, teamList.teams)}

@@ -1,8 +1,8 @@
 import React, { PropTypes } from 'react'
 import MomentPropTypes from 'react-moment-proptypes';
-import DayCell from './DayCell'
+import DayCell from './CalendarDayCell'
 
-const WeekRow = ({ days, month, onDaySelect, renderDay }) => (
+const CalendarWeekRow = ({ days, month, onDaySelect, renderDay }) => (
   <div className="week-row">
     {days.map((day, index) =>
       <DayCell
@@ -15,10 +15,10 @@ const WeekRow = ({ days, month, onDaySelect, renderDay }) => (
   </div>
 )
 
-WeekRow.propTypes = {
+CalendarWeekRow.propTypes = {
   days: PropTypes.arrayOf(MomentPropTypes.momentObj).isRequired,
   month: MomentPropTypes.momentObj.isRequired,
   renderDay: PropTypes.func,
 }
 
-export default WeekRow
+export default CalendarWeekRow

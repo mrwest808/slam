@@ -4,7 +4,7 @@ import moment from 'moment';
 import Button from './Button';
 import CalendarMonth from './CalendarMonth';
 import IconButton from './IconButton';
-import DayHeadings from './calendar/DayHeadings';
+import DayHeadings from './CalendarDayHeadings';
 import GameCell from './GameCell';
 import { toISODateString } from '../utils';
 
