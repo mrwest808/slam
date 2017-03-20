@@ -21,9 +21,7 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.selectedTeam !== this.props.selectedTeam && !this.props.gameList
-    ) {
+    if (prevProps.selectedTeam !== this.props.selectedTeam && !this.props.gameList) {
       this.props.fetchGamesForTeam(this.props.selectedTeam);
     }
   }
